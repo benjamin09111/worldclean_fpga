@@ -1,7 +1,5 @@
 # Space Shooter FPGA - Verilog Game
 
-*(Desplázate hacia abajo para la versión en español)*
-
 ---
 
 ## Overview
@@ -138,64 +136,6 @@ The project follows a modular design for scalability:
 - **Sound Effects**: Audio output via the FPGA's audio jack/PWM.
 
 ---
----
-
-# Space Shooter FPGA - Juego en Verilog (Versión en Español)
-
-## Descripción General
-Este proyecto es un juego de disparos espacial implementado íntegramente en hardware mediante **Verilog HDL**. Está diseñado para la placa **Nexys A7 FPGA** con salida de video a un **monitor VGA**, ofreciendo una experiencia de juego en tiempo real procesada directamente por las compuertas lógicas de la FPGA.
-
-🎥 **Ver demostración:** [YouTube - Chip Invaders Demo](https://youtube.com/shorts/NVsZrk53b1Q)
-
----
-
-## 🛠️ Guía de Implementación y Flasheo (WSL & FPGA)
-Esta sección explica cómo compilamos y cargamos el juego en la FPGA usando WSL (Windows Subsystem for Linux), cubriendo desde la síntesis hasta la conexión física.
-
-### Paso 1: Generación del Bitstream
-Utilizamos un `Makefile` para automatizar el flujo de herramientas de código abierto (Yosys, Nextpnr).
-
-En la terminal de WSL:
-```bash
-cd build_FPGA_NexysA7
-make
-```
-Esto genera varios archivos intermedios (`.json`, `.fasm`) y finalmente el **`nexys_game.bit`**, que es el archivo que interpretará la FPGA. También se genera la base de datos del chip (`chipdb`).
-
-### Paso 2: Conexión USB con WSL (USBIPD)
-WSL no detecta los puertos USB por defecto. Usamos `usbipd` en Windows para "pasar" la conexión de la placa a Linux.
-
-1. En **PowerShell (Admin)**:
-   ```powershell
-   usbipd list
-   usbipd bind --busid <BUSID_DE_TU_PLACA>
-   usbipd attach --wsl --busid <BUSID_DE_TU_PLACA>
-   ```
-   *(Ver Figura 1 arriba para referencia visual de la placa conectada).*
-
-### Paso 3: Cargar el Juego (Flashing)
-Una vez que WSL tiene control del USB, usamos `openFPGALoader` para escribir el bitstream en la memoria SRAM de la FPGA.
-
-Comando en WSL:
-```bash
-sudo env "PATH=$PATH" openFPGALoader --board nexys_a7_100 --bitstream nexys_game.bit
-```
-*(Ver Figura 2 para el output de la terminal).*
-
-Al finalizar (barra `Load SRAM` al 100%), la luz "DONE" de la placa se encenderá y el juego aparecerá en el monitor VGA conectado.
-
-*(Ver Figura 3 para el resultado final en pantalla).*
-
----
-
-## 🕹️ Controles
-Los controles están mapeados a los botones físicos de la Nexys A7:
-- **BTN ARRIBA**: Mover nave hacia arriba.
-- **BTN ABAJO**: Mover nave hacia abajo.
-- **BTN CENTRO**: Disparar / Iniciar juego.
-- **CPU RESET**: Reiniciar todo.
-
----
 
 **Autor:** Benjamin
-**Plataforma:** Nexys A7 FPGA & Verilog
+**Plataform:** Nexys A7 FPGA & Verilog
